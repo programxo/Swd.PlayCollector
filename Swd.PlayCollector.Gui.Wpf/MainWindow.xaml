@@ -6,7 +6,37 @@
         xmlns:local="clr-namespace:Swd.PlayCollector.Gui.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Foreground>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Foreground>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="10">
+            <Label Content="Suchbegriff" Margin="2"/>
+            <TextBox x:Name="txbSearchValue" Width="400" Margin="2" Text="{Binding SearchCriteria, UpdateSourceTrigger=PropertyChanged, Mode=}" ToolTip="{Binding SearchCriteriaHelpText}" Padding="3,0,0,0"/>
+            <Button x:Name="btnSearch" Content="Suchen..." Margin="2" Padding="10 0 10 0"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" Grid.Column="1" x:Name="grdCollectionItems" ItemsSource="{Binding CollectionItems}"/>
+
+
+
+        <Button Grid.Row="3" Grid.Column="1" Margin="10" Content="Daten laden" x:Name="btnLoadData" Click="btnLoadData_Click" />
+
 
     </Grid>
 </Window>

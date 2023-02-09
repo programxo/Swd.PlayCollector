@@ -1,21 +1,22 @@
-using Swd.PlayCollector.Model;
-using Swd.PlayCollector.Repository;
+using System.Data;
 
 namespace Swd.PlayCollector.Test
 {
     [TestClass]
     public class TestRepository
     {
+        public TestRepository()
+        {
+            EmptyDatabase();
+        }
 
         [TestMethod]
         public void Add_CollectionItem()
         {
             // Arrange 
-            CollectionItem item = new();
-            item.Name = "Testitem";
-            item.CreatedDate = DateTime.Now;
-            item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-
+            
+            CollectionItem item = GetCollectionItem();
+             string itemName = "Testitem";
             // Act
             CollectionItemRepository repo = new();
             repo.Add(item);
@@ -29,8 +30,8 @@ namespace Swd.PlayCollector.Test
         public async Task Add_CollectionItemAsync()
         {
             // Arrange 
-            CollectionItem item = new();
-            item.Name = "Testitem";
+            CollectionItem item = GetCollectionItem();
+            string itemName = "Testitem";
             item.CreatedDate = DateTime.Now;
             item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
@@ -50,8 +51,8 @@ namespace Swd.PlayCollector.Test
         public void Add_CollectionItemWithPrice(double price)
         {
             // Arrange 
-            CollectionItem item = new();
-            item.Name = "Testitem";
+            CollectionItem item = GetCollectionItem();
+            string itemName = "Testitem";
             item.Price = Convert.ToDecimal(price);
             item.CreatedDate = DateTime.Now;
             item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -69,9 +70,9 @@ namespace Swd.PlayCollector.Test
         public void Update_CollectionItem()
         {
             // Arrange 
+            CollectionItem item = GetCollectionItem();
             CollectionItemRepository repo = new();
             string itemName = "Testitem";
-            CollectionItem item = new();
             item.Name = itemName;
             item.CreatedDate = DateTime.Now;
             item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -153,15 +154,66 @@ namespace Swd.PlayCollector.Test
         {
             // Arrange 
             CollectionItemRepository repo = new();
-        
-            // Act
-            var items = repo.GetAll();
-            var items2 = repo.GetAll().ToList();
+            CollectionItem item = GetCollectionItem();
+            string itemName = "Testitem";
+            repo.Add(item);
 
+            // Act
             int itemCount = repo.GetAll().Count();
 
             // Assert
             Assert.AreNotEqual(0, itemCount);
+
+        }
+
+        [TestMethod]
+        public async Task GetAll_CollectionItemAsync()
+        {
+            // Arrange 
+            CollectionItemRepository repo = new();
+            CollectionItem item = GetCollectionItem();
+            string itemName = "Testitem";
+            await repo.AddAsync(item);
+
+            // Act
+            int itemCount = await repo.GetAllAsync().Result.CountAsync();
+
+            // Assert
+            Assert.AreNotEqual(0, itemCount);
+
+        }
+
+        private static CollectionItem GetCollectionItem()
+        {
+            CollectionItem item = new();
+            item.Name = "Testitem";
+            item.CreatedDate = DateTime.Now;
+            item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+
+            return item;
+        }
+
+        // mockaroo fake data
+
+        private static void EmptyDatabase()
+        {
+            PlayCollectorContext testContext = new();
+
+            var command = testContext.Database.GetDbConnection().CreateCommand();
+            command.CommandText = "spEmptyDatabase";
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            // Bsp. für einen Parameter der an die SP übergeben wird
+            // command.Parameters.Add(new SqlParameter("parametername", "parametervalue"));
+
+
+            testContext.Database.OpenConnection();
+            command.ExecuteNonQuery();
+
+            // Bsp. um Rückgabewerte zu verarbeiten
+            // var result = command.ExecuteReader();
+            // var dataTable = new DataTable();
+            // dataTable.Load(result);
 
         }
     }

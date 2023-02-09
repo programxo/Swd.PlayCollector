@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swd.PlayCollector.Migration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swd.PlayCollector.Test", "Swd.PlayCollector.Test\Swd.PlayCollector.Test.csproj", "{A95EC181-38B6-4DB4-86EB-F7A5EBBD6356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swd.PlayCollector.Repository", "Swd.PlayCollector.Repository\Swd.PlayCollector.Repository.csproj", "{09847F48-707B-4AC0-B2F0-D462B12D093C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swd.PlayCollector.Repository", "Swd.PlayCollector.Repository\Swd.PlayCollector.Repository.csproj", "{09847F48-707B-4AC0-B2F0-D462B12D093C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swd.PlayCollector.Business", "Swd.PlayCollector.Business\Swd.PlayCollector.Business.csproj", "{07DC7778-73AA-47DD-8C1C-5DC3B722C484}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{09847F48-707B-4AC0-B2F0-D462B12D093C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09847F48-707B-4AC0-B2F0-D462B12D093C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09847F48-707B-4AC0-B2F0-D462B12D093C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

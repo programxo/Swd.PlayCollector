@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,9 +71,15 @@ namespace Swd.PlayCollector.Repository
             }
         }
 
-        public Task DeleteAsync(object key)
+        public async Task DeleteAsync(object key)
         {
-            throw new NotImplementedException();
+            TEntity existing = await _dbSet.FindAsync(key);
+
+            if (existing != null)
+            {
+                _dbSet.Remove(existing);
+                _dbContext.SaveChangesAsync();
+            }
         }
 
 
@@ -80,9 +89,9 @@ namespace Swd.PlayCollector.Repository
             return _dbSet.AsQueryable();
         }
 
-        public Task<IQueryable<TEntity>> GetAllAsync()
+        public async Task<IQueryable<TEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _dbSet.AsQueryable();
         }
 
         // Get By Id
@@ -91,9 +100,10 @@ namespace Swd.PlayCollector.Repository
             return _dbSet.Find(key);
         }
 
-        public Task<TEntity> GetByIdAsync(object key)
+        public async Task<TEntity> GetByIdAsync(object key)
         {
-            throw new NotImplementedException();
+            return await _dbSet.FindAsync(key);
+            
         }
 
         // Update
@@ -109,11 +119,16 @@ namespace Swd.PlayCollector.Repository
             }
         }
 
-        public Task UpdateAsync(TEntity t, object key)
+        public async Task UpdateAsync(TEntity t, object key)
         {
-            throw new NotImplementedException();
-        }
+            TEntity existing = await _dbSet.FindAsync(key);
 
-       
+            if(existing != null)
+            {
+                _dbSet.Update(existing);
+                _dbContext.SaveChangesAsync();
+                _dbContext.Entry(existing).Reload();
+            }
+        }
     }
 }
