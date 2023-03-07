@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\close.png" />
+    <None Remove="Resources\document.png" />
+    <None Remove="Resources\export.png" />
+    <None Remove="Resources\image.png" />
+    <None Remove="Resources\import.png" />
+    <None Remove="Resources\itemAdd.png" />
+    <None Remove="Resources\itemDelete.png" />
+    <None Remove="Resources\itemSave.png" />
+    <None Remove="Resources\link.png" />
+    <None Remove="Resources\print.png" />
+    <None Remove="Resources\setting.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
@@ -19,6 +34,42 @@
   <ItemGroup>
     <ProjectReference Include="..\Swd.PlayCollector.Business\Swd.PlayCollector.Business.csproj" />
     <ProjectReference Include="..\Swd.PlayCollector.Model\Swd.PlayCollector.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\close.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\document.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\export.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\image.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\import.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\itemAdd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\itemDelete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\itemSave.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\link.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\print.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\setting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

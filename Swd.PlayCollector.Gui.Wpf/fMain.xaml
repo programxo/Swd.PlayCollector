@@ -1,4 +1,4 @@
-﻿<Window x:Class="Swd.PlayCollector.Gui.Wpf.fMain"
+﻿<RibbonWindow x:Class="Swd.PlayCollector.Gui.Wpf.fMain"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:Swd.PlayCollector.Gui.Wpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="fMain" Height="450" Width="800" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+        Title="fMain" Height="450" Width="800" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PlaymoColor}">
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
@@ -18,25 +20,96 @@
             <ColumnDefinition Width="75*"/>
         </Grid.ColumnDefinitions>
 
+        <!--<Ribbon Grid.Row="0" Grid.ColumnSpan="2">
+            <Ribbon.ApplicationMenu>
+            <RibbonApplicationMenu>
+                
+                    <RibbonApplicationMenuItem Header="Import"/>
+                    <RibbonApplicationMenuItem Header="Export"/>
+                    <RibbonApplicationSplitMenuItem/>
+                    <RibbonApplicationMenuItem Header="Print"/>
+                    <RibbonApplicationSplitMenuItem/>
+                    <RibbonApplicationMenuItem Header="Setting"/>
+                    <RibbonApplicationSplitMenuItem/>
+                    <RibbonApplicationMenuItem Header="Close"/>
+                
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>-->
+
         <Ribbon Grid.Row="0" Grid.ColumnSpan="2">
-            
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+
+                    <RibbonApplicationMenuItem ImageSource="Resources/import.png" Header="Import"/>
+                    <RibbonApplicationMenuItem ImageSource="Resources/export.png" Header="Export"/>
+                    
+                    <RibbonApplicationSplitMenuItem/>
+                    
+                    <RibbonApplicationMenuItem ImageSource="Resources/print.png" Header="Print"/>
+                    
+                    <RibbonApplicationSplitMenuItem/>
+                    
+                    <RibbonApplicationMenuItem ImageSource="Resources/setting.png" Header="Setting"/>
+                    
+                    <RibbonApplicationSplitMenuItem/>
+                    
+                    <RibbonApplicationMenuItem ImageSource="Resources/close.png" Header="Close"/>
+
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+
+
+            <RibbonTab Header="Start">
+                <RibbonGroup x:Name="grpCollectionItem" Header="Collection item">
+                    
+                    <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
+                    <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                    <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
+                    <RibbonButton Label="Cancel" LargeImageSource="pack://application:,,,/Resources/close.png"/>
+                    
+                </RibbonGroup>
+
+                <RibbonGroup x:Name="grpMediaItems" Header="Insert">
+
+                    <RibbonButton Label="Image" LargeImageSource="pack://application:,,,/Resources/image.png"/>
+                    <RibbonButton Label="Document" LargeImageSource="pack://application:,,,/Resources/document.png"/>
+                    <RibbonButton Label="Link" LargeImageSource="pack://application:,,,/Resources/link.png"/>
+          
+                </RibbonGroup>
+            </RibbonTab>
+
+            <RibbonTab Header="Lists">
+                <RibbonGroup x:Name="grpLocation" Header="Location">
+
+                    <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
+                    <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                    <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
+                    <RibbonButton Label="Cancel" LargeImageSource="pack://application:,,,/Resources/close.png"/>
+
+                </RibbonGroup>
+
+                <RibbonGroup x:Name="grpThemes" Header="Themes">
+
+                    <RibbonButton Label="Image" LargeImageSource="pack://application:,,,/Resources/image.png"/>
+                    <RibbonButton Label="Document" LargeImageSource="pack://application:,,,/Resources/document.png"/>
+                    <RibbonButton Label="Link" LargeImageSource="pack://application:,,,/Resources/link.png"/>
+
+                </RibbonGroup>
+            </RibbonTab>
         </Ribbon>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" Background="LightGray">
-            <TextBox></TextBox>
-            <ListBox></ListBox>
-        </StackPanel>
+        
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Background="AntiqueWhite">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25*"/>
@@ -68,12 +141,12 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Background="LightGray">
             <TextBox Text="search ..." Grid.Row="1" Grid.Column="0"></TextBox>
-            <ListBox ></ListBox>
+            <ListBox VerticalAlignment="Stretch" ItemsSource="{Binding CollectionItemsList}"></ListBox>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
-            <Label Content="xxx"></Label>
+            <Label Content="items ..."></Label>
         </StackPanel>
         
     </Grid>
-</Window>
+</RibbonWindow>
