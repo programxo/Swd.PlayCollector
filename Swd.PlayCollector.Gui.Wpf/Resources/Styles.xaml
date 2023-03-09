@@ -13,6 +13,13 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <Style TargetType="Label" x:Key="Title">
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
     <Style TargetType="TextBox">
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontSize" Value="16"/>
@@ -31,8 +38,28 @@
             
     </Style>
 
+    <Style TargetType="Image" x:Key="imgListItem">
+        <Setter Property="Width" Value="35"/>
+        <Setter Property="Height" Value="35"/>
+
+    </Style>
+
     <!--<Style TargetType="RowDefinition">
         <Setter Property="Height" Value="35"/>
     </Style>-->
+
+    <Style TargetType="{x:Type ListBoxItem}" x:Key="ListBoxItemAlternatingStyle">
+        <Style.Triggers>
+
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="#FFFFFF"/>
+            </Trigger>
+
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="#FFC8C8C8"/>
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
 
 </ResourceDictionary>

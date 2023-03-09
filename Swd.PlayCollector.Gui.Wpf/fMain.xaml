@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Swd.PlayCollector.Gui.Wpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="fMain" Height="450" Width="800" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+        Title="fMain" Height="500" Width="1000" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
         Background="{StaticResource PlaymoColor}">
     
     <Grid>
@@ -61,11 +61,10 @@
 
             <RibbonTab Header="Start">
                 <RibbonGroup x:Name="grpCollectionItem" Header="Collection item">
-                    
-                    <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
-                    <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
-                    <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
-                    <RibbonButton Label="Cancel" LargeImageSource="pack://application:,,,/Resources/close.png"/>
+
+                    <RibbonButton Label="New" Command="{Binding AddCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
+                    <RibbonButton Label="Delete" Command="{Binding DeleteCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                    <RibbonButton Label="Save" Command="{Binding SaveCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
                     
                 </RibbonGroup>
 
@@ -126,26 +125,53 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="Releaseyear"/>
                     <Label Grid.Row="6" Grid.Column="0" Content="Price"/>
 
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="Name"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="Setnumber"/>
-                    <ComboBox Grid.Row="3" Grid.Column="1" Text="Theme"/>
-                    <ComboBox Grid.Row="4" Grid.Column="1" Text="Location"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="Releaseyear"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCollectionItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCollectionItem.Number, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox Grid.Row="3" Grid.Column="1" 
+                              IsEditable="True"
+                              ItemsSource="{Binding ThemeList}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedCollectionItem.ThemeId, UpdateSourceTrigger=PropertyChanged}"
+                              />
+                
+                    <ComboBox Grid.Row="4" Grid.Column="1" 
+                              IsEditable="True"
+                              ItemsSource="{Binding LocationList}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedCollectionItem.LocationId, UpdateSourceTrigger=PropertyChanged}"
+                              />
+
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCollectionItem.ReleaseYear, UpdateSourceTrigger=PropertyChanged}"/>
                     <!--<TextBox Grid.Row="6" Grid.Column="1" Text="Price"/>-->
-                    <xctk:DecimalUpDown Grid.Row="6" Grid.Column="1" FormatString="#,##0.00" Minimum="0" Maximum="99999" Increment="1"/>
+                <xctk:DecimalUpDown Value="{Binding SelectedCollectionItem.Price, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1" FormatString="#,##0.00" Minimum="0" Maximum="99999" Increment="1"/>
 
 
 
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Background="LightGray">
-            <TextBox Text="search ..." Grid.Row="1" Grid.Column="0"></TextBox>
-            <ListBox VerticalAlignment="Stretch" ItemsSource="{Binding CollectionItemsList}"></ListBox>
-        </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True" Background="LightGray">
+            <TextBox Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top" Margin="5 15 5 10"></TextBox>
+            <!--<ListBox VerticalAlignment="Stretch" Margin="5 0"
+                     ItemsSource="{Binding CollectionItemsList}" 
+                     ItemTemplate="{StaticResource templCollectionItemListItem}"
+                     AlternationCount="2"
+                     ItemContainerStyle="{StaticResource ListBoxItemAlternatingStyle}"
+                     SelectedItem="{Binding SelectedCollectionItem, UpdateSourceTrigger=PropertyChanged}"
+                     />-->
+            <ListView VerticalAlignment="Stretch" Margin="5 0"
+                     ItemsSource="{Binding CollectionItemsList, UpdateSourceTrigger=PropertyChanged}" 
+                     ItemTemplate="{StaticResource templCollectionItemListItem}"
+                     AlternationCount="2"
+                     ItemContainerStyle="{StaticResource ListBoxItemAlternatingStyle}"
+                     SelectedItem="{Binding SelectedCollectionItem, UpdateSourceTrigger=PropertyChanged}"
+                     />
+        </DockPanel>
 
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
-            <Label Content="items ..."></Label>
+            <Label Content="{Binding StatusBarText}" ></Label>
         </StackPanel>
         
     </Grid>

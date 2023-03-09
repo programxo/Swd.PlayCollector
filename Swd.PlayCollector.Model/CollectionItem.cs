@@ -26,5 +26,25 @@ namespace Swd.PlayCollector.Model
         public Theme Theme { get; set; } 
         public List<Media> MediaSet { get; set; }
 
+        public CollectionItem()
+        {
+            
+        }
+
+        public CollectionItem(bool withDefaults)
+        {
+            if (withDefaults)
+            {
+                this.Number = "9999";
+                this.Price = 0;
+                this.ReleaseYear = DateTime.Now.Year;
+            }
+        }
+
+        public string SearchField
+        {
+            get { return string.Format("{0}{1}{2}", this.Id, this.Name, this.Number); }
+        }
+
     }
 }

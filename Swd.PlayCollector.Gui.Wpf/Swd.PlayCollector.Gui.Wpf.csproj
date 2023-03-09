@@ -17,6 +17,7 @@
     <None Remove="Resources\itemDelete.png" />
     <None Remove="Resources\itemSave.png" />
     <None Remove="Resources\link.png" />
+    <None Remove="Resources\playmobil.png" />
     <None Remove="Resources\print.png" />
     <None Remove="Resources\setting.png" />
   </ItemGroup>
@@ -62,6 +63,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\link.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\playmobil.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\print.png">
