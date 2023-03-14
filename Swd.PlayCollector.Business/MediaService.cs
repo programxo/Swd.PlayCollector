@@ -6,20 +6,20 @@ namespace Swd.PlayCollector.Business
 
 
 
-    public class LocationService
+    public class MediaService
     {
 
-        private ILocationRepository _IRepository;
+        private IMediaRepository _IRepository;
 
 
-        public LocationService()
+        public MediaService()
         {
-            _IRepository = new LocationRepository();
+            _IRepository = new MediaRepository();
 
         }
 
 
-        public async Task<IQueryable<Location>> GetAllAsync()
+        public async Task<IQueryable<Media>> GetAllAsync()
         {
             var returnList = await _IRepository.GetAllAsync();
             return returnList;

@@ -114,6 +114,7 @@ namespace Swd.PlayCollector.Repository
             if (existing != null)
             {
                 _dbContext.Entry(existing).CurrentValues.SetValues(t);
+
                 _dbContext.SaveChanges();
                 _dbContext.Entry(existing).Reload();
             }

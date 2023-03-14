@@ -1,21 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GongSolutions.Wpf.DragDrop;
 using Swd.PlayCollector.Business;
 using Swd.PlayCollector.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using static System.Net.WebRequestMethods;
 
 namespace Swd.PlayCollector.Gui.Wpf.ViewModel
 {
-    public partial class fMainViewModel : ObservableObject
+    public partial class fMainViewModel : ObservableObject, IDropTarget
     {
+        // fields
+
         private string _searchValue;
         private string _statusBarText;
         private CollectionItem _selectedCollectionItem;
@@ -24,6 +30,8 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         private ObservableCollection<Theme> _themeList;
         private ICollectionView _collectionItemsView;
 
+
+        
         public string SearchValue
         {
             get { return _searchValue; }
@@ -41,7 +49,11 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         public CollectionItem SelectedCollectionItem
         {
             get { return _selectedCollectionItem; }
-            set { SetProperty(ref _selectedCollectionItem, value); }
+            set { 
+                SetProperty(ref _selectedCollectionItem, value);
+                this.DeleteCollectionItemCommand.NotifyCanExecuteChanged();
+                this.SaveCollectionItemCommand.NotifyCanExecuteChanged();
+            }
         }
 
         public ObservableCollection<CollectionItem> CollectionItemsList
@@ -68,6 +80,9 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             set { SetProperty(ref _collectionItemsView, value); }
         }
 
+        public IAsyncRelayCommand ExitCommand { get; }
+        public IAsyncRelayCommand ImportCommand { get; }
+
         public IAsyncRelayCommand SearchForCollectionItemCommand { get; }
         public IAsyncRelayCommand AddCollectionItemCommand { get; }
         public IAsyncRelayCommand DeleteCollectionItemCommand { get; }
@@ -78,17 +93,16 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             this.StatusBarText = string.Empty;
             LoadDataAsync();
 
+
+            ExitCommand = new AsyncRelayCommand(Exit, CanExitExecuted);
+            ImportCommand = new AsyncRelayCommand(Import, CanImportExecuted);
             SearchForCollectionItemCommand = new AsyncRelayCommand(SearchForCollectionItem);
-            AddCollectionItemCommand = new AsyncRelayCommand(AddCollectionItem);
-            DeleteCollectionItemCommand = new AsyncRelayCommand(DeleteCollectionItem);
-            SaveCollectionItemCommand = new AsyncRelayCommand(SaveCollectionItem);
+            AddCollectionItemCommand = new AsyncRelayCommand(AddCollectionItem, CanAddCollecionItemExecuted);
+            DeleteCollectionItemCommand = new AsyncRelayCommand(DeleteCollectionItem, CanDeleteCollecionItemExecuted);
+            SaveCollectionItemCommand = new AsyncRelayCommand(SaveForCollectionItem, CanSaveCollecionItemExecuted);
 
             CollectionItemsView = CollectionViewSource.GetDefaultView(CollectionItemsList);
-
-
         }
-
-        
 
         private async Task LoadDataAsync()
         {
@@ -96,7 +110,8 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             LocationService locationService = new();
             ThemeService themeService = new();
 
-            Task<IQueryable<CollectionItem>> getCollectionItemTask = collectionItemService.GetAllAsync();
+            //Task<IQueryable<CollectionItem>> getCollectionItemTask = collectionItemService.GetAllAsync();
+            Task<IQueryable<CollectionItem>> getCollectionItemTask = collectionItemService.GetAllInklusiveAsync();
             Task<IQueryable<Location>> getLocationTask = locationService.GetAllAsync();
             Task<IQueryable<Theme>> getThemeTask = themeService.GetAllAsync();
 
@@ -112,6 +127,57 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             CollectionItemsView.Filter = CollectionItemFilter;
         }
 
+        // Can execute methods
+
+        private bool CanExitExecuted()
+        {
+
+            return false;
+
+        }
+
+        private bool CanImportExecuted()
+        {
+
+            return false;
+
+        }
+
+        private bool CanAddCollecionItemExecuted()
+        {
+            return true;
+        }
+
+        private bool CanSaveCollecionItemExecuted()
+        {
+            return SelectedCollectionItem != null;
+        }
+
+        private bool CanDeleteCollecionItemExecuted()
+        {
+            return SelectedCollectionItem != null;
+        }
+
+        // async methods
+
+        private async Task Exit()
+        {
+
+            
+
+        }
+
+        
+
+        private async Task Import()
+        {
+
+
+
+        }
+
+        
+
         private async Task AddCollectionItem()
         {
 
@@ -122,23 +188,21 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
 
         private async Task DeleteCollectionItem()
         {
-            CollectionItem item = new CollectionItem();
-            if (item != null)
-            {
+            CollectionItem item = this.SelectedCollectionItem;
+            if (item != null) {
                 CollectionItemService service = new CollectionItemService();
-               
                 await service.DeleteAsync(item.Id);
                 await LoadDataAsync();
                 this.SelectedCollectionItem = CollectionItemsList.FirstOrDefault();
             }
         }
 
-        private async Task SaveCollectionItem()
+        private async Task SaveForCollectionItem()
         {
             CollectionItemService service = new CollectionItemService();
             CollectionItem item = this.SelectedCollectionItem;
-            if (item.Id == 0) 
-            { 
+            if (item.Id == 0)
+            {
                 item.CreatedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 await service.AddAsync(item);
             }
@@ -159,6 +223,30 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         private string GetStatusBarText()
         {
             return string.Format($"{this.CollectionItemsList.Count} item(s) found.");
+        }
+
+        public void DragOver( IDropInfo dropInfo)
+        {
+            var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
+            dropInfo.Effects = dragFileList.Any(item =>
+            {
+                var extension = Path.GetExtension(item);
+                return extension != null && extension.Equals(".png");
+            }) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
+            dropInfo.Effects = dragFileList.Any(item =>
+            {
+                var extension = Path.GetExtension(item);
+                return extension != null && extension.Equals(".png");
+            }) ? DragDropEffects.Copy : DragDropEffects.None;
+            foreach (var item in dragFileList)
+            {
+
+            }
         }
     }
 }

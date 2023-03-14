@@ -1,4 +1,5 @@
-﻿using Swd.PlayCollector.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Swd.PlayCollector.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace Swd.PlayCollector.Repository
 {
     public class CollectionItemRepository: GenericRepository<CollectionItem, PlayCollectorContext>, ICollectionItemRepository
     {
-
+        public async Task<IQueryable<CollectionItem>> GetAllInklusiveAsync()
+        {
+            PlayCollectorContext context = new PlayCollectorContext();
+            return context.CollectionItem.Include(c => c.MediaSet);
+        }
     }
 }

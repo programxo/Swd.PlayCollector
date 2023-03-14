@@ -1,15 +1,22 @@
-﻿
+﻿using Swd.PlayCollector.Model;
+using Swd.PlayCollector.Repository;
 
 namespace Swd.PlayCollector.Business
 {
+
+
+
     public class CollectionItemService
     {
+
         private ICollectionItemRepository _IRepository;
+
 
         public CollectionItemService()
         {
             _IRepository = new CollectionItemRepository();
         }
+
 
         public async Task AddAsync(CollectionItem item)
         {
@@ -26,12 +33,16 @@ namespace Swd.PlayCollector.Business
             await _IRepository.DeleteAsync(id);
         }
 
-
-
         public async Task<IQueryable<CollectionItem>> GetAllAsync()
         {
-            var retunList = await _IRepository.GetAllAsync();
-            return retunList;
+            var returnList = await _IRepository.GetAllAsync();
+            return returnList;
+        }
+
+        public async Task<IQueryable<CollectionItem>> GetAllInklusiveAsync()
+        {
+            var returnList = await _IRepository.GetAllInklusiveAsync();
+            return returnList;
         }
     }
 }
