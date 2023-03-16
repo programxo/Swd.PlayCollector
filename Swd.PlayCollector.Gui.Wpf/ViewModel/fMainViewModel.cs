@@ -31,11 +31,13 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         private ICollectionView _collectionItemsView;
 
 
-        
+
         public string SearchValue
         {
             get { return _searchValue; }
-            set { SetProperty(ref _searchValue, value);
+            set
+            {
+                SetProperty(ref _searchValue, value);
                 SearchForCollectionItem();
             }
         }
@@ -49,7 +51,8 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         public CollectionItem SelectedCollectionItem
         {
             get { return _selectedCollectionItem; }
-            set { 
+            set
+            {
                 SetProperty(ref _selectedCollectionItem, value);
                 this.DeleteCollectionItemCommand.NotifyCanExecuteChanged();
                 this.SaveCollectionItemCommand.NotifyCanExecuteChanged();
@@ -123,7 +126,7 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         private async Task SearchForCollectionItem()
         {
             CollectionItemsView = CollectionViewSource.GetDefaultView(CollectionItemsList);
-            CollectionItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending)) ;
+            CollectionItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             CollectionItemsView.Filter = CollectionItemFilter;
         }
 
@@ -163,11 +166,11 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
         private async Task Exit()
         {
 
-            
+
 
         }
 
-        
+
 
         private async Task Import()
         {
@@ -176,7 +179,7 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
 
         }
 
-        
+
 
         private async Task AddCollectionItem()
         {
@@ -184,12 +187,13 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             this.SelectedCollectionItem = new CollectionItem(true);
 
         }
-        
+
 
         private async Task DeleteCollectionItem()
         {
             CollectionItem item = this.SelectedCollectionItem;
-            if (item != null) {
+            if (item != null)
+            {
                 CollectionItemService service = new CollectionItemService();
                 await service.DeleteAsync(item.Id);
                 await LoadDataAsync();
@@ -225,28 +229,44 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             return string.Format($"{this.CollectionItemsList.Count} item(s) found.");
         }
 
-        public void DragOver( IDropInfo dropInfo)
+        public void DragOver(IDropInfo dropInfo)
         {
-            var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
-            dropInfo.Effects = dragFileList.Any(item =>
+            if (this.SelectedCollectionItem != null)
             {
-                var extension = Path.GetExtension(item);
-                return extension != null && extension.Equals(".png");
-            }) ? DragDropEffects.Copy : DragDropEffects.None;
-        }
-
-        public void Drop(IDropInfo dropInfo)
-        {
-            var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
-            dropInfo.Effects = dragFileList.Any(item =>
-            {
-                var extension = Path.GetExtension(item);
-                return extension != null && extension.Equals(".png");
-            }) ? DragDropEffects.Copy : DragDropEffects.None;
-            foreach (var item in dragFileList)
-            {
-
+                var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
+                dropInfo.Effects = dragFileList.Any(item =>
+                {
+                    var extension = Path.GetExtension(item);
+                    return extension != null && extension.Equals(".png");
+                }) ? DragDropEffects.Copy : DragDropEffects.None;
             }
+            else
+            {
+                dropInfo.Effects = DragDropEffects.None;
+            }
+
         }
+
+        public async void Drop(IDropInfo dropInfo)
+        {
+            if (this.SelectedCollectionItem != null)
+            {
+                var dragFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
+                dropInfo.Effects = dragFileList.Any(item =>
+                {
+                    var extension = Path.GetExtension(item);
+                    return extension != null && extension.Equals(".png");
+                }) ? DragDropEffects.Copy : DragDropEffects.None;
+
+                CollectionItemService service = new CollectionItemService();
+                await service.AddMediaItems(dragFileList, SelectedCollectionItem);
+            }
+            else
+            {
+                dropInfo.Effects = DragDropEffects.None;
+            }
+
+        }
+
     }
 }

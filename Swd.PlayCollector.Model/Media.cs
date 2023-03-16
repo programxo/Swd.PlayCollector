@@ -19,5 +19,14 @@ namespace Swd.PlayCollector.Model
 
         public TypeOfDocument TypeOfDocument { get; set; }
         public CollectionItem CollectionItem { get; set; }
+
+        public string ImagePath 
+        { 
+            get
+            {
+                string rootDir = @"C:\\SwDeveloper2022\\SWDData\\PlayCollector";
+                return Path.Combine(rootDir, Uri, Name);
+            }
+        }
     }
 }

@@ -126,9 +126,10 @@ namespace Swd.PlayCollector.Repository
 
             if(existing != null)
             {
-                _dbSet.Update(existing);
-                _dbContext.SaveChangesAsync();
-                _dbContext.Entry(existing).Reload();
+                _dbContext.Entry(existing).CurrentValues.SetValues(t);
+
+                await _dbContext.SaveChangesAsync();
+                await _dbContext.Entry(existing).ReloadAsync();
             }
         }
     }

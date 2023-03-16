@@ -9,177 +9,186 @@
         mc:Ignorable="d"
         Title="fMain" Height="800" Width="1000" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
         Background="{StaticResource PlaymoColor}">
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="35"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="75*"/>
-        </Grid.ColumnDefinitions>
 
-        <!--<Ribbon Grid.Row="0" Grid.ColumnSpan="2">
-            <Ribbon.ApplicationMenu>
-            <RibbonApplicationMenu>
-                
-                    <RibbonApplicationMenuItem Header="Import"/>
-                    <RibbonApplicationMenuItem Header="Export"/>
-                    <RibbonApplicationSplitMenuItem/>
-                    <RibbonApplicationMenuItem Header="Print"/>
-                    <RibbonApplicationSplitMenuItem/>
-                    <RibbonApplicationMenuItem Header="Setting"/>
-                    <RibbonApplicationSplitMenuItem/>
-                    <RibbonApplicationMenuItem Header="Close"/>
-                
-                </RibbonApplicationMenu>
-            </Ribbon.ApplicationMenu>-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="75*" />
+            </Grid.ColumnDefinitions>
 
-        <Ribbon Grid.Row="0" Grid.ColumnSpan="2">
-            <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu>
+            <!--Ribbon-->
+            <Ribbon Grid.Row="0" Grid.ColumnSpan="2" SelectedIndex="0" >
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu>
+                        <RibbonApplicationMenuItem Header="Import" Command="{Binding ImportCommand}" ImageSource="pack://application:,,,/Resources/itemAdd.png" />
+                        <RibbonApplicationMenuItem Header="Export" />
+                        <RibbonApplicationSplitMenuItem />
+                        <RibbonApplicationMenuItem Header="Print" />
+                        <RibbonApplicationSplitMenuItem />
+                        <RibbonApplicationMenuItem Header="Setting" />
+                        <RibbonApplicationSplitMenuItem />
+                        <RibbonApplicationMenuItem Header="Close" Command="{Binding ExitCommand}" />
+                    </RibbonApplicationMenu>
+                </Ribbon.ApplicationMenu>
 
-                    <RibbonApplicationMenuItem ImageSource="Resources/import.png" Header="Import" Command="{Binding ExitCommand}"/>
-                    <RibbonApplicationMenuItem ImageSource="Resources/export.png" Header="Export"/>
-                    
-                    <RibbonApplicationSplitMenuItem/>
-                    
-                    <RibbonApplicationMenuItem ImageSource="Resources/print.png" Header="Print"/>
-                    
-                    <RibbonApplicationSplitMenuItem/>
-                    
-                    <RibbonApplicationMenuItem ImageSource="Resources/setting.png" Header="Setting"/>
-                    
-                    <RibbonApplicationSplitMenuItem/>
-                    
-                    <RibbonApplicationMenuItem ImageSource="Resources/close.png" Header="Close" Command="{Binding ExitCommand}"/>
+                <RibbonTab Header="Start">
+                    <RibbonGroup x:Name="grpCollectionItem" Header="Collection item">
+                        <RibbonButton Label="New" Command="{Binding AddCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemAdd.png" />
+                        <RibbonButton Label="Delete" Command="{Binding DeleteCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                        <RibbonButton Label="Save" Command="{Binding SaveCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
+                    </RibbonGroup>
 
-                </RibbonApplicationMenu>
-            </Ribbon.ApplicationMenu>
-
-
-            <RibbonTab Header="Start">
-                <RibbonGroup x:Name="grpCollectionItem" Header="Collection item">
-
-                    <RibbonButton Label="New" Command="{Binding AddCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
-                    <RibbonButton Label="Delete" Command="{Binding DeleteCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
-                    <RibbonButton Label="Save" Command="{Binding SaveCollectionItemCommand}" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
-                    
-                </RibbonGroup>
-
-                <RibbonGroup x:Name="grpMediaItems" Header="Insert">
-
+                    <RibbonGroup x:Name="grpMediaitems" Header="Insert">
                     <RibbonButton Label="Image" LargeImageSource="pack://application:,,,/Resources/image.png"/>
                     <RibbonButton Label="Document" LargeImageSource="pack://application:,,,/Resources/document.png"/>
-                    <RibbonButton Label="Link" LargeImageSource="pack://application:,,,/Resources/link.png"/>
-          
-                </RibbonGroup>
-            </RibbonTab>
+                        <RibbonButton Label="Link" LargeImageSource="pack://application:,,,/Resources/link.png"/>
+                    </RibbonGroup>
+                </RibbonTab>
 
-            <RibbonTab Header="Lists">
-                <RibbonGroup x:Name="grpLocation" Header="Location">
+                <RibbonTab Header="Lists">
+                    <RibbonGroup x:Name="grpLocation" Header="Locations">
+                        <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png" />
+                        <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                        <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
+                    </RibbonGroup>
 
-                    <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png"/>
-                    <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
-                    <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
-                    <RibbonButton Label="Cancel" LargeImageSource="pack://application:,,,/Resources/close.png"/>
+                    <RibbonGroup x:Name="grpThemes" Header="Themes">
+                        <RibbonButton Label="New" LargeImageSource="pack://application:,,,/Resources/itemAdd.png" />
+                        <RibbonButton Label="Delete" LargeImageSource="pack://application:,,,/Resources/itemDelete.png"/>
+                        <RibbonButton Label="Save" LargeImageSource="pack://application:,,,/Resources/itemSave.png"/>
+                    </RibbonGroup>
+                </RibbonTab>
 
-                </RibbonGroup>
+            </Ribbon>
 
-                <RibbonGroup x:Name="grpThemes" Header="Themes">
 
-                    <RibbonButton Label="Image" LargeImageSource="pack://application:,,,/Resources/image.png"/>
-                    <RibbonButton Label="Document" LargeImageSource="pack://application:,,,/Resources/document.png"/>
-                    <RibbonButton Label="Link" LargeImageSource="pack://application:,,,/Resources/link.png"/>
 
-                </RibbonGroup>
-            </RibbonTab>
-        </Ribbon>
-
-        
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Background="AntiqueWhite">
-            
-                <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*"/>
-                    <ColumnDefinition Width="25*"/>
-                    <ColumnDefinition Width="25*"/>
-                    <ColumnDefinition Width="25*"/>
-                    
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Id and Name" Grid.ColumnSpan="1" Style="{StaticResource H1}"/>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
-                    <Label Grid.Row="2" Grid.Column="0" Content="Setnumber"/>
-                    <Label Grid.Row="3" Grid.Column="0" Content="Theme"/>
-                    <Label Grid.Row="4" Grid.Column="0" Content="Location"/>
-                    <Label Grid.Row="5" Grid.Column="0" Content="Releaseyear"/>
-                    <Label Grid.Row="6" Grid.Column="0" Content="Price"/>
-
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCollectionItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCollectionItem.Number, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox Grid.Row="3" Grid.Column="1" 
-                              IsEditable="True"
-                              ItemsSource="{Binding ThemeList}"
-                              DisplayMemberPath="Name"
-                              SelectedValuePath="Id"
-                              SelectedValue="{Binding SelectedCollectionItem.ThemeId, UpdateSourceTrigger=PropertyChanged}"
-                              />
-                
-                    <ComboBox Grid.Row="4" Grid.Column="1" 
-                              IsEditable="True"
-                              ItemsSource="{Binding LocationList}"
-                              DisplayMemberPath="Name"
-                              SelectedValuePath="Id"
-                              SelectedValue="{Binding SelectedCollectionItem.LocationId, UpdateSourceTrigger=PropertyChanged}"
-                              />
-
-                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCollectionItem.ReleaseYear, UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<TextBox Grid.Row="6" Grid.Column="1" Text="Price"/>-->
-                <xctk:DecimalUpDown Value="{Binding SelectedCollectionItem.Price, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1" FormatString="#,##0.00" Minimum="0" Maximum="99999" Increment="1"/>
-            </Grid>
-            <!--Files-->
-            <Border 
-                dragDrop:DragDrop.IsDropTarget="True" 
-                dragDrop:DragDrop.DropHandler="{Binding }"
-                BorderThickness="1 1 1 1" Background="#DDDDDDDD" Height="50" Margin="2" BorderBrush="DarkGray">
-                <Label Content="Drop files here ..."/>
-            </Border>
-            <DataGrid Margin="2" VerticalAlignment="Stretch" ItemsSource="{Binding SelectedCollectionItem.MediaSet}"/>
-        </StackPanel>
-
-        <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True" Background="LightGray">
-            <TextBox Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top" Margin="5 15 5 10"></TextBox>
-            <!--<ListBox VerticalAlignment="Stretch" Margin="5 0"
-                     ItemsSource="{Binding CollectionItemsList}" 
+            <!--Navigation-->
+            <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True"   >
+                <TextBox Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top" Margin="5 15 5 10" />
+                <!--<ListBox VerticalAlignment="Stretch"
+                     Margin="5 0"
+                     ItemsSource="{Binding CollectionItemsList}"
                      ItemTemplate="{StaticResource templCollectionItemListItem}"
                      AlternationCount="2"
                      ItemContainerStyle="{StaticResource ListBoxItemAlternatingStyle}"
                      SelectedItem="{Binding SelectedCollectionItem, UpdateSourceTrigger=PropertyChanged}"
                      />-->
-            <ListView VerticalAlignment="Stretch" Margin="5 0"
-                     ItemsSource="{Binding CollectionItemsList, UpdateSourceTrigger=PropertyChanged}" 
+                <ListView VerticalAlignment="Stretch"
+                     Margin="5 0"
+                     ItemsSource="{Binding CollectionItemsList}"
                      ItemTemplate="{StaticResource templCollectionItemListItem}"
-                     AlternationCount="2"
+                     AlternationCount="1"
                      ItemContainerStyle="{StaticResource ListBoxItemAlternatingStyle}"
                      SelectedItem="{Binding SelectedCollectionItem, UpdateSourceTrigger=PropertyChanged}"
+                      IsSynchronizedWithCurrentItem="True"
                      />
+
+            </DockPanel>
+
+
+
+
+            <!--Content-->
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
+            <StackPanel>
+                <!--Data for item-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*" />
+                        <ColumnDefinition Width="25*" />
+                        <ColumnDefinition Width="25*" />
+                        <ColumnDefinition Width="25*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Id and Name" Grid.ColumnSpan="4" Style="{StaticResource H1}" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Name" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Setnumber" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="Theme" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="Location" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="Realeaseyear" />
+                    <Label Grid.Row="6" Grid.Column="0" Content="Price" />
+
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCollectionItem.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCollectionItem.Number, UpdateSourceTrigger=PropertyChanged}" />
+                    <ComboBox Grid.Row="3" Grid.Column="1"
+                              IsEditable="True"
+                              ItemsSource="{Binding ThemeList}" 
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedCollectionItem.ThemeId, UpdateSourceTrigger=PropertyChanged}"
+                              />
+                    <ComboBox Grid.Row="4" Grid.Column="1"
+                              IsEditable="True"
+                              ItemsSource="{Binding LocationList}" 
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedCollectionItem.LocationId, UpdateSourceTrigger=PropertyChanged}"
+                              />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedCollectionItem.ReleaseYear, UpdateSourceTrigger=PropertyChanged}" />
+                    <!--<TextBox Grid.Row="6" Grid.Column="1" Text="Price" />-->
+                    <xctk:DecimalUpDown Value="{Binding SelectedCollectionItem.Price, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1" FormatString="#,##0.00" Minimum="0" Maximum="99999" Increment="1" />
+
+                </Grid>
+            </StackPanel>
+
+            <DockPanel Grid.Row="1" Grid.Column="1" LastChildFill="True" >
+            <DockPanel DockPanel.Dock="Bottom">
+                <Border DockPanel.Dock="Top"
+                dragDrop:DragDrop.IsDropTarget="True" 
+                dragDrop:DragDrop.DropHandler="{Binding }"
+                BorderThickness="1 1 1 1" Background="#DDDDDDDD" Height="35" Margin="2" BorderBrush="DarkGray">
+                    <Label Content="Drop files here..." />
+                    </Border>
+                    <DataGrid DockPanel.Dock="Bottom" Margin="2"
+                              VerticalAlignment="Stretch" 
+                              ItemsSource="{Binding SelectedCollectionItem.MediaSet}" 
+                              AutoGenerateColumns="False"
+                              VerticalScrollBarVisibility="Visible"
+                      >
+                        <DataGrid.Columns>
+
+                            <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+
+                                <DataTemplate>
+                                    <Image Source="{Binding ImagePath}" Style="{StaticResource imgListItem}"/>
+                                </DataTemplate>
+                                
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                            
+                            <DataGridTextColumn />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Type of Document"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
         </DockPanel>
 
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
-            <Label Content="{Binding StatusBarText}" ></Label>
+            <!--Statusbar-->
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
+                <Label Content="{Binding StatusBarText}" />
+            </StackPanel>
+
         </StackPanel>
-        
     </Grid>
 </RibbonWindow>
+
+            
+    
+    

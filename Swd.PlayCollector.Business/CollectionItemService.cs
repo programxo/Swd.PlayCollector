@@ -3,20 +3,15 @@ using Swd.PlayCollector.Repository;
 
 namespace Swd.PlayCollector.Business
 {
-
-
-
     public class CollectionItemService
     {
 
         private ICollectionItemRepository _IRepository;
 
-
         public CollectionItemService()
         {
             _IRepository = new CollectionItemRepository();
         }
-
 
         public async Task AddAsync(CollectionItem item)
         {
@@ -43,6 +38,37 @@ namespace Swd.PlayCollector.Business
         {
             var returnList = await _IRepository.GetAllInklusiveAsync();
             return returnList;
+        }
+
+        public async Task AddMediaItems(IEnumerable<string> sourcefilePaths, CollectionItem item)
+        {
+            if (item != null)
+            {
+                foreach (var sourcefilePath in sourcefilePaths)
+                {
+                    string targetFilePath = await CopyFile(sourcefilePath, item.Id);
+                    string fileExtension = Path.GetExtension(targetFilePath);
+                    TypeOfDocumentService typeOfDocumentService = new();
+
+                    Media media = new Media
+                    {
+                        Name = Path.GetFileName(targetFilePath),
+                        Uri = string.Format("{0}", item.Id),
+                        TypeOfDocument = await typeOfDocumentService.GetTypeOfDocumentByFileExtension(fileExtension),
+                        CollectionItem = item
+                    };
+                    _IRepository.AddMedia(item, media);
+                }
+            }
+        }
+
+        private async Task<string> CopyFile(string sourceFilePath, int id)
+        {
+            // TODO: String literal durch configuratins wert ersetzen
+            string rootDir = @"C:\\SwDeveloper2022\\SWDData\\PlayCollector";
+            string targetFilePath = Path.Combine(rootDir, id.ToString(), Path.GetFileName(sourceFilePath));
+            await FileHelper.CopyFile(sourceFilePath, targetFilePath);
+            return targetFilePath;
         }
     }
 }

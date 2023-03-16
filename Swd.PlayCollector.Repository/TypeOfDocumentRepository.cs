@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Swd.PlayCollector.Repository
 {
-    public interface ICollectionItemRepository : IGenericRepository<CollectionItem>
+    public class TypeOfDocumentRepository: GenericRepository<TypeOfDocument, PlayCollectorContext>, ITypeOfDocumentRepository
     {
-        Task<IQueryable<CollectionItem>> GetAllInklusiveAsync();
-        Task AddMedia(CollectionItem item, Media media);
+
     }
 }
