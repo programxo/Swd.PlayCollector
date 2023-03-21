@@ -62,4 +62,13 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="TextBlock" x:Key="error">
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="2 0 0 0"/>
+
+    </Style>
+
 </ResourceDictionary>

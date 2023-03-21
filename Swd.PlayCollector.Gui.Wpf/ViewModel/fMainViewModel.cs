@@ -14,11 +14,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
-using static System.Net.WebRequestMethods;
 
 namespace Swd.PlayCollector.Gui.Wpf.ViewModel
 {
-    public partial class fMainViewModel : ObservableObject, IDropTarget
+    public partial class fMainViewModel : ObservableValidator, IDropTarget
     {
         // fields
 
@@ -53,7 +52,7 @@ namespace Swd.PlayCollector.Gui.Wpf.ViewModel
             get { return _selectedCollectionItem; }
             set
             {
-                SetProperty(ref _selectedCollectionItem, value);
+                SetProperty(ref _selectedCollectionItem, value, true);
                 this.DeleteCollectionItemCommand.NotifyCanExecuteChanged();
                 this.SaveCollectionItemCommand.NotifyCanExecuteChanged();
             }

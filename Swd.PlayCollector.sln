@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swd.PlayCollector.Repositor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swd.PlayCollector.Business", "Swd.PlayCollector.Business\Swd.PlayCollector.Business.csproj", "{07DC7778-73AA-47DD-8C1C-5DC3B722C484}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swd.PlayCollector.Helper", "Swd.PlayCollector.Helper\Swd.PlayCollector.Helper.csproj", "{F699E08F-ABF4-4D59-AF94-A1348E87DB4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07DC7778-73AA-47DD-8C1C-5DC3B722C484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F699E08F-ABF4-4D59-AF94-A1348E87DB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F699E08F-ABF4-4D59-AF94-A1348E87DB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F699E08F-ABF4-4D59-AF94-A1348E87DB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F699E08F-ABF4-4D59-AF94-A1348E87DB4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

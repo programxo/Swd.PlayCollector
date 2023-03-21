@@ -1,4 +1,5 @@
-﻿using Swd.PlayCollector.Model;
+﻿using Swd.PlayCollector.Helper;
+using Swd.PlayCollector.Model;
 using Swd.PlayCollector.Repository;
 
 namespace Swd.PlayCollector.Business
@@ -64,8 +65,8 @@ namespace Swd.PlayCollector.Business
 
         private async Task<string> CopyFile(string sourceFilePath, int id)
         {
-            // TODO: String literal durch configuratins wert ersetzen
-            string rootDir = @"C:\\SwDeveloper2022\\SWDData\\PlayCollector";
+            PlayCollectorConfiguration configuration = new();
+            string rootDir = configuration.PathToMediafiles;
             string targetFilePath = Path.Combine(rootDir, id.ToString(), Path.GetFileName(sourceFilePath));
             await FileHelper.CopyFile(sourceFilePath, targetFilePath);
             return targetFilePath;

@@ -4,7 +4,7 @@
     <DataTemplate x:Key="templCollectionItemListItem">
         <Border>
             <StackPanel Orientation="Horizontal">
-                <Image Source="pack://application:,,,/Resources/playmobil.png" Style="{StaticResource imgListItem}"/>
+                <Image Source="{Binding PreviewImage}" Style="{StaticResource imgListItem}"/>
                 <StackPanel Orientation="Vertical">
                     <Label Content="{Binding Name}" Style="{StaticResource Title}"/>
                     <Label Content="{Binding Number}"/>
@@ -12,4 +12,16 @@
             </StackPanel>
         </Border>
     </DataTemplate>
+
+    <ControlTemplate x:Key="textBoxErrorTemplate">
+        <DockPanel LastChildFill="True">
+            <TextBlock DockPanel.Dock="Right" Foreground="Red" Style="{StaticResource error}">!</TextBlock>
+            <TextBlock DockPanel.Dock="Right" Foreground="Red" Text="{Binding ErrorContent}" Style="{StaticResource error}">!</TextBlock>
+            <Border BorderBrush="Red" BorderThickness="1">
+                <AdornedElementPlaceholder />
+            </Border>
+        </DockPanel>
+        
+    </ControlTemplate>
+    
 </ResourceDictionary>

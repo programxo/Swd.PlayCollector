@@ -71,14 +71,7 @@
             <!--Navigation-->
             <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True"   >
                 <TextBox Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top" Margin="5 15 5 10" />
-                <!--<ListBox VerticalAlignment="Stretch"
-                     Margin="5 0"
-                     ItemsSource="{Binding CollectionItemsList}"
-                     ItemTemplate="{StaticResource templCollectionItemListItem}"
-                     AlternationCount="2"
-                     ItemContainerStyle="{StaticResource ListBoxItemAlternatingStyle}"
-                     SelectedItem="{Binding SelectedCollectionItem, UpdateSourceTrigger=PropertyChanged}"
-                     />-->
+
                 <ListView VerticalAlignment="Stretch"
                      Margin="5 0"
                      ItemsSource="{Binding CollectionItemsList}"
@@ -123,8 +116,14 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="Realeaseyear" />
                     <Label Grid.Row="6" Grid.Column="0" Content="Price" />
 
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCollectionItem.Name, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCollectionItem.Number, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" 
+                             Text="{Binding SelectedCollectionItem.Name, UpdateSourceTrigger=PropertyChanged}" 
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=textBoxErrorTemplate}"
+                             />
+                    <TextBox Grid.Row="2" Grid.Column="1" 
+                             Text="{Binding SelectedCollectionItem.Number, UpdateSourceTrigger=PropertyChanged}" 
+                             Validation.ErrorTemplate="{StaticResource ResourceKey=textBoxErrorTemplate}"
+                             />
                     <ComboBox Grid.Row="3" Grid.Column="1"
                               IsEditable="True"
                               ItemsSource="{Binding ThemeList}" 

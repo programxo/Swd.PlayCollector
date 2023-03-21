@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Swd.PlayCollector.Helper;
 
 namespace Swd.PlayCollector.Model
 {
@@ -20,11 +14,13 @@ namespace Swd.PlayCollector.Model
         public TypeOfDocument TypeOfDocument { get; set; }
         public CollectionItem CollectionItem { get; set; }
 
+
         public string ImagePath 
         { 
             get
             {
-                string rootDir = @"C:\\SwDeveloper2022\\SWDData\\PlayCollector";
+                PlayCollectorConfiguration config = new();
+                string rootDir = config.PathToMediafiles;
                 return Path.Combine(rootDir, Uri, Name);
             }
         }
